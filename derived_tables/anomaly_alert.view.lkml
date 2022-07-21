@@ -165,12 +165,10 @@ view: anomaly_alert {
     sql: ${TABLE}.DA_ORDER_STATUS ;;
   }
 
-  dimension_group: post_despatch_advice_days {
-    label: "after despatch"
-    type:duration
-    intervals: [day]
-    sql_start: ${recadv_timestamp_date};;
-    sql_end: ${da_timestamp_date} ;;
+  dimension: post_despatch_advice_days {
+    label: "Days after despatch"
+    type: number
+    sql: DATE_DIFF( ${recadv_timestamp_date}, ${da_timestamp_date}, day);;
   }
 
   set: detail {
