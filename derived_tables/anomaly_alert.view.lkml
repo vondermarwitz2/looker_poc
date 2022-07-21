@@ -171,11 +171,25 @@ view: anomaly_alert {
     sql: DATE_DIFF( ${recadv_timestamp_date}, ${da_timestamp_date}, day);;
   }
 
+  dimension: post_order_created_minutes {
+    label: "Minutes after created"
+    type: number
+    sql: DATE_DIFF( ${sap_create_minute}, ${por_appointment_minute}, minute);;
+  }
+
   measure: m_post_despatch_advice_days {
-    label: "total days after despatch"
+    label: "Total days after despatch"
     type: sum
     sql: ${post_despatch_advice_days} ;;
   }
+
+  measure: m_post_order_created_minutes {
+    label: "Total minutes after created"
+    type: sum
+    sql: ${post_order_created_minutes} ;;
+  }
+
+
 
   set: detail {
     fields: [
