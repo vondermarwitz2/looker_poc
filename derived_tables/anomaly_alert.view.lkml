@@ -58,7 +58,7 @@ view: anomaly_alert {
       -- DA
         , DA.JMSTimestamp as DA_timestamp
         , DA.despatchAdviceNumber AS DA_NUMBER
-        , DA.expectedDeliveryTime AS DA_EXPECTED_DELIVERY_TYPE
+        , DA.expectedDeliveryTime AS DA_EXPECTED_DELIVERY
       -- RecAdv
         , RecAdv.messageTimestamp as RECADV_Timestamp
         , case when POR.orderNumber is null then "PO missing"  -- Alert after 10 minutes
@@ -134,6 +134,7 @@ view: anomaly_alert {
   dimension_group: da_timestamp {
     label: "DA Timestamp"
     type: time
+    timeframes: [raw, date, week, month, year]
     sql: ${TABLE}.DA_timestamp ;;
   }
 
@@ -143,15 +144,16 @@ view: anomaly_alert {
     sql: ${TABLE}.DA_NUMBER ;;
   }
 
-  dimension_group: da_expected_delivery_type {
-    label: "DA Expected delivery type"
+  dimension_group: da_expected_delivery {
+    label: "DA Expected delivery"
     type: time
-    sql: ${TABLE}.DA_EXPECTED_DELIVERY_TYPE ;;
+    sql: ${TABLE}.DA_EXPECTED_DELIVERY ;;
   }
 
   dimension_group: recadv_timestamp {
     label: "RECADV timestamp"
     type: time
+    timeframes: [raw, date, week, month, year]
     datatype: datetime
     sql: ${TABLE}.RECADV_Timestamp ;;
   }
@@ -179,12 +181,12 @@ view: anomaly_alert {
       sap_reference,
       so_delivery_type,
       so_pickup_outlet_id,
-      por_not_before_time,
+      por_not_before_date,
       por_appointment_time,
-      da_timestamp_time,
+      da_timestamp_date,
       da_number,
-      da_expected_delivery_type_time,
-      recadv_timestamp_time,
+      da_expected_delivery_time,
+      recadv_timestamp_date,
       da_order_status
     ]
   }
