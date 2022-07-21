@@ -1,7 +1,7 @@
 view: anomaly_alert {
   derived_table: {
     sql: WITH PO as ( -- createPurchaseOrder
-          SELECT sales_document, datetime(created_at, "Europe/Berlin") as SO_createDate, last_change_datetime, total_net_amount, your_reference, sold_to_party
+          SELECT sales_document, DATETIME(created_at, "Europe/Berlin") as SO_createDate, last_change_datetime, total_net_amount, your_reference, sold_to_party
           FROM `mms-plg-looker-poc-a.sales_order.sales_order`
           WHERE sales_document_type = 'ZORE'
       ),
@@ -46,7 +46,7 @@ view: anomaly_alert {
       SELECT distinct
       -- PO
           PO.sales_document as SAP_SALES_DOCUMENT
-        , PO.SO_createDate as SAP_CREATE
+        , cast(PO.SO_createDate as datetime) as SAP_CREATE
         , right(PO.sold_to_party, 3) AS SAP_OUTLET
         , PO.your_reference AS SAP_REFERENCE
       -- SO
@@ -54,7 +54,7 @@ view: anomaly_alert {
         , SO.pickupOutletId as SO_PICKUP_OUTLET_ID
       -- POR
         , POR.notBeforeDate AS POR_NOT_BEFORE
-        , POR.POR_appointmentDate AS POR_APPOINTMENT
+        , cast (POR.POR_appointmentDate as datetime) AS POR_APPOINTMENT
       -- DA
         , DA.JMSTimestamp as DA_timestamp
         , DA.despatchAdviceNumber AS DA_NUMBER
@@ -174,7 +174,7 @@ view: anomaly_alert {
   dimension: post_order_created_minutes {
     label: "Minutes after created"
     type: number
-    sql: DATE_DIFF( ${sap_create_minute}, ${por_appointment_minute}, minute);;
+    sql: DATE_DIFF( ${por_appointment_raw}, ${sap_create_raw}, minute);;
   }
 
   measure: m_post_despatch_advice_days {
