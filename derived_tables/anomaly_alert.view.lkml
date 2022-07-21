@@ -171,6 +171,12 @@ view: anomaly_alert {
     sql: DATE_DIFF( ${recadv_timestamp_date}, ${da_timestamp_date}, day);;
   }
 
+  measure: m_post_despatch_advice_days {
+    label: "total days after despatch"
+    type: sum
+    sql: ${post_despatch_advice_days} ;;
+  }
+
   set: detail {
     fields: [
       sap_sales_document,
