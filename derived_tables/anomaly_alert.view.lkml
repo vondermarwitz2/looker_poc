@@ -84,6 +84,7 @@ view: anomaly_alert {
     type: string
     label: "SAP Sales Document"
     sql: ${TABLE}.SAP_SALES_DOCUMENT ;;
+
   }
 
   dimension_group: sap_create {
@@ -165,12 +166,15 @@ view: anomaly_alert {
     sql: ${TABLE}.DA_ORDER_STATUS ;;
   }
 
+# This is the time taken to receive advice at the pickup location after an item has been despatched from the warehouse
   dimension: post_despatch_advice_days {
     label: "Days after despatch"
     type: number
     sql: DATE_DIFF( ${recadv_timestamp_date}, ${da_timestamp_date}, day);;
   }
 
+# This is the time taken to receive the order information at the store goods management system after it has been created by the customer
+# The GMS tells the store who to give the products they recieve from the warehouse to
   dimension: post_order_created_minutes {
     label: "Minutes after created"
     type: number

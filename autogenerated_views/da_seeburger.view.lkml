@@ -10,19 +10,19 @@ explore: da_seeburger {
 
   join: da_seeburger__master_shipment_container__shipment_container__level {
     view_label: "Da Seeburger: Mastershipmentcontainer Shipmentcontainer Level"
-    sql: LEFT JOIN UNNEST(${da_seeburger__master_shipment_container.shipment_container__level}) as da_seeburger__master_shipment_container__shipment_container__level ;;
+    sql: , UNNEST(${da_seeburger__master_shipment_container.shipment_container__level}) as da_seeburger__master_shipment_container__shipment_container__level ;;
     relationship: one_to_many
   }
 
   join: da_seeburger__master_shipment_container__shipment_container__line_items {
     view_label: "Da Seeburger: Mastershipmentcontainer Shipmentcontainer Lineitems"
-    sql: LEFT JOIN UNNEST(${da_seeburger__master_shipment_container.shipment_container__line_items}) as da_seeburger__master_shipment_container__shipment_container__line_items ;;
+    sql: , UNNEST(${da_seeburger__master_shipment_container.shipment_container__line_items}) as da_seeburger__master_shipment_container__shipment_container__line_items ;;
     relationship: one_to_many
   }
 
   join: da_seeburger__master_shipment_container__shipment_container {
     view_label: "Da Seeburger: Mastershipmentcontainer Shipmentcontainer"
-    sql: LEFT JOIN UNNEST(${da_seeburger__master_shipment_container.shipment_container}) as da_seeburger__master_shipment_container__shipment_container ;;
+    sql: , UNNEST(${da_seeburger__master_shipment_container.shipment_container}) as da_seeburger__master_shipment_container__shipment_container ;;
     relationship: one_to_many
   }
 }
@@ -225,12 +225,12 @@ view: da_seeburger__master_shipment_container {
 view: da_seeburger__master_shipment_container__shipment_container__level {
   dimension: carrier_id {
     type: string
-    sql: ${TABLE}.carrierId ;;
+    sql: ( ci.carrierId FROM UNNEST(da_seeburger__master_shipment_container.shipmentContainer.level) ci where ci.index = 3);;
   }
 
   dimension: tracking_number {
     type: string
-    sql: ${TABLE}.trackingNumber ;;
+    sql: (tn.trackingNumber FROM UNNEST(da_seeburger__master_shipment_container.shipmentContainer.level) tn where tn.index = 3) ;;
   }
 }
 
