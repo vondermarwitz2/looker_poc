@@ -85,6 +85,35 @@ view: anomaly_alert {
     label: "SAP Sales Document"
     sql: ${TABLE}.SAP_SALES_DOCUMENT ;;
 
+    action: {
+      label: "Operational notes"
+      url: "https://europe-west1-v135-6214-process-monitoring.cloudfunctions.net/checkreq"
+      param: {
+        name: "checkreq"
+        value: "{{ value }}"
+      }
+      form_param: {
+        name: "checkreq"
+        type: select
+        label: "Mark as checked"
+        default: "OK"
+        description: "Check transaction in SAP and choose option"
+        option: {
+          name: "OK"
+        }
+        option: {
+          name: "Requires further investigation"
+        }
+      }
+    }
+
+    link: {
+      label: "View in SAP"
+      url: "https://pipes.datavirtuality.com/connectors/visualize/sap/looker/"
+      icon_url: "https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
+    }
+
+
   }
 
   dimension_group: sap_create {
