@@ -193,6 +193,16 @@ view: anomaly_alert {
     type: string
     drill_fields: [sap_sales_document,sap_reference]
     sql: ${TABLE}.DA_ORDER_STATUS ;;
+    html:
+    {% if da_order_status._value == "PO missing" %}
+    <p style="color: purple; font-size: 100%">{{ rendered_value }}</p>
+    {% elsif da_order_status._value == "DA missing" %}
+    <p style="color: blue; font-size:100%">{{ rendered_value }}</p>
+    {% elsif da_order_status._value == "Order completed" %}
+    <p style="color: green; font-size:100%">{{ rendered_value }}</p>
+    {% else %}
+    <p style="color: red; font-size:100%">{{ rendered_value }}</p>
+    {% endif %};;
   }
 
 # This is the time taken to receive advice at the pickup location after an item has been despatched from the warehouse
