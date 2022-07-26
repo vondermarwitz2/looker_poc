@@ -87,7 +87,7 @@ view: anomaly_alert {
 
     action: {
       label: "Operational notes"
-      url: "https://europe-west1-v135-6214-process-monitoring.cloudfunctions.net/checkreq"
+      url: "https://europe-west1-v135-6214-process-monitoring.cloudfunctions.net/checkreq2"
       param: {
         name: "checkreq"
         value: "{{ value }}"
