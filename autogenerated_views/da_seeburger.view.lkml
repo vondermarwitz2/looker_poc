@@ -225,12 +225,12 @@ view: da_seeburger__master_shipment_container {
 view: da_seeburger__master_shipment_container__shipment_container__level {
   dimension: carrier_id {
     type: string
-    sql: ( ci.carrierId FROM UNNEST(da_seeburger__master_shipment_container.shipmentContainer.level) ci where ci.index = 3);;
+    sql: ${TABLE}.carrierId;;
   }
 
   dimension: tracking_number {
     type: string
-    sql: (tn.trackingNumber FROM UNNEST(da_seeburger__master_shipment_container.shipmentContainer.level) tn where tn.index = 3) ;;
+    sql: ${TABLE}.trackingNumber ;;
   }
 }
 
