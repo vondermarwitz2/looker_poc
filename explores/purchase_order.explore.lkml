@@ -3,9 +3,4 @@ include: "/refined_views/purchase_order_all_r.view.lkml"
 
 explore: +purchase_order {
   hidden: no
-  fields: [purchase_order.header__delivery_info__not_before_date,
-    purchase_order.header__appointment_date,
-    purchase_order.header__numbers__vendor_order_number,
-    purchase_order.header__numbers__order_number,
-    purchase_order.po_insert_id]
 }

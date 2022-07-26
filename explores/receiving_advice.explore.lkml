@@ -3,6 +3,4 @@ include: "/refined_views/receiving_advice_all_r.view.lkml"
 
 explore: +receiving_advice {
   hidden: no
-  fields: [receiving_advice.message_timestamp_date,
-    receiving_advice.recadv__delivery_note_number]
 }
