@@ -112,8 +112,6 @@ view: anomaly_alert {
       url: "https://pipes.datavirtuality.com/connectors/visualize/sap/looker/"
       icon_url: "https://upload.wikimedia.org/wikipedia/commons/5/59/SAP_2011_logo.svg"
     }
-
-
   }
 
   dimension_group: sap_create {
@@ -131,8 +129,8 @@ view: anomaly_alert {
 
   dimension: sap_reference {
     label: "SAP Reference"
-    type: string
-    sql: ${TABLE}.SAP_REFERENCE ;;
+    type: number
+    sql: cast (${TABLE}.SAP_REFERENCE as integer);;
   }
 
   dimension: so_delivery_type {
@@ -191,8 +189,9 @@ view: anomaly_alert {
   dimension: da_order_status {
     label: "DA Order Status"
     type: string
-    drill_fields: [sap_sales_document,sap_reference]
+    drill_fields: [sap_sales_document,sap_reference, so_pickup_outlet_id]
     sql: ${TABLE}.DA_ORDER_STATUS ;;
+
     html:
     {% if da_order_status._value == "PO missing" %}
     <p style="color: purple; font-size: 100%">{{ rendered_value }}</p>
@@ -203,6 +202,11 @@ view: anomaly_alert {
     {% else %}
     <p style="color: red; font-size:100%">{{ rendered_value }}</p>
     {% endif %};;
+
+    link: {
+      label: "Order drilldown"
+      url: "https://mms1.cloud.looker.com/dashboards/30?DA+Order+Status=-%25Order+completed%25&Order+Status={{value}}"
+    }
   }
 
 # This is the time taken to receive advice at the pickup location after an item has been despatched from the warehouse
